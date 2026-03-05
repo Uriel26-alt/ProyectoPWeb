@@ -1,258 +1,265 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MotoShop - Venta de Motos y Refacciones</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
     <!-- LOGIN -->
     <div class="login-container" id="loginPage">
-        <div class="login-box">
-            <div class="logo">&#127981;</div>
-            <h1>MotoShop 2.4</h1>
-            <p>Venta de Motos y Refacciones</p>
-            <div class="input-group">
-                <input type="password" id="passwordInput" placeholder="Ingresa la contrasena" autofocus>
+        <div class="login-card card text-center p-5">
+            <div class="fs-1 mb-2">&#127981;</div>
+            <h1 class="h3 mb-2 fw-bold">MotoShop 2.4</h1>
+            <p class="text-muted mb-4 small">Venta de Motos y Refacciones</p>
+            <div class="mb-3">
+                <input type="password" class="form-control" id="passwordInput" placeholder="Ingresa la contrasena" autofocus>
             </div>
-            <button class="btn-login" onclick="login()">Iniciar Sesion</button>
-            <div class="error-msg" id="errorMsg">Contrasena incorrecta. Intenta de nuevo.</div>
+            <button class="btn btn-danger w-100 fw-semibold py-2" onclick="login()">Iniciar Sesion</button>
+            <div class="text-danger small mt-3" id="errorMsg" style="display:none">Contrasena incorrecta. Intenta de nuevo.</div>
         </div>
     </div>
 
     <!-- APP -->
     <div class="app-container" id="appPage">
 
-        <!-- Sidebar Overlay -->
-        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
-
-        <!-- Sidebar -->
-        <div class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <span class="logo-icon">&#127981;</span>
-                <h2>MotoShop</h2>
+        <!-- Sidebar (Offcanvas) -->
+        <div class="offcanvas offcanvas-start" id="sidebar" tabindex="-1">
+            <div class="offcanvas-header sidebar-header">
+                <h5 class="offcanvas-title text-danger">
+                    <span class="me-2">&#127981;</span> MotoShop
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
             </div>
-            <nav class="sidebar-nav">
-                <div class="nav-section-title">Principal</div>
-                <div class="nav-item active" onclick="navigate('dashboard', this)">
-                    <span class="icon">&#128202;</span> Dashboard
+            <div class="offcanvas-body d-flex flex-column p-0">
+                <nav class="flex-grow-1 py-3 overflow-auto">
+                    <div class="nav-section-title">Principal</div>
+                    <div class="nav-item active" onclick="navigate('dashboard', this)">
+                        <span>&#128202;</span> Dashboard
+                    </div>
+                    <div class="nav-section-title">Catalogo</div>
+                    <div class="nav-item" onclick="navigate('motos', this)">
+                        <span>&#127949;</span> Motos
+                    </div>
+                    <div class="nav-item" onclick="navigate('refacciones', this)">
+                        <span>&#128295;</span> Refacciones
+                    </div>
+                    <div class="nav-section-title">Operaciones</div>
+                    <div class="nav-item" onclick="navigate('ventas', this)">
+                        <span>&#128176;</span> Ventas
+                    </div>
+                    <div class="nav-item" onclick="navigate('clientes', this)">
+                        <span>&#128101;</span> Clientes
+                    </div>
+                </nav>
+                <div class="p-3 sidebar-footer-area">
+                    <button class="btn btn-outline-danger w-100" onclick="logout()">&#128682; Cerrar Sesion</button>
                 </div>
-                <div class="nav-section-title">Catalogo</div>
-                <div class="nav-item" onclick="navigate('motos', this)">
-                    <span class="icon">&#127949;</span> Motos
-                </div>
-                <div class="nav-item" onclick="navigate('refacciones', this)">
-                    <span class="icon">&#128295;</span> Refacciones
-                </div>
-                <div class="nav-section-title">Operaciones</div>
-                <div class="nav-item" onclick="navigate('ventas', this)">
-                    <span class="icon">&#128176;</span> Ventas
-                </div>
-                <div class="nav-item" onclick="navigate('clientes', this)">
-                    <span class="icon">&#128101;</span> Clientes
-                </div>
-            </nav>
-            <div class="sidebar-footer">
-                <button class="btn-logout" onclick="logout()">&#128682; Cerrar Sesion</button>
             </div>
         </div>
 
         <!-- Topbar -->
-        <div class="topbar">
-            <button class="btn-menu" onclick="toggleSidebar()">&#9776;</button>
-            <h1 id="pageTitle">Dashboard</h1>
-        </div>
+        <nav class="topbar navbar sticky-top px-3">
+            <button class="btn btn-sm btn-outline-secondary me-3" onclick="toggleSidebar()">&#9776;</button>
+            <span class="fw-semibold fs-5" id="pageTitle">Dashboard</span>
+        </nav>
 
         <!-- Content Wrapper -->
-        <div class="content-wrapper">
+        <div class="content-wrapper d-flex">
 
-        <!-- Main Content -->
-        <div class="main-content">
+            <!-- Main Content -->
+            <div class="main-content flex-grow-1 p-4">
 
-            <!-- Dashboard -->
-            <div class="section active" id="section-dashboard">
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-icon">&#127949;</div>
-                        <div class="stat-value" id="totalMotos">12</div>
-                        <div class="stat-label">Motos en inventario</div>
+                <!-- Dashboard -->
+                <div class="section active" id="section-dashboard">
+                    <div class="row g-4 mb-4">
+                        <div class="col-sm-6 col-xl-3">
+                            <div class="card stat-card h-100">
+                                <div class="card-body">
+                                    <div class="fs-1 mb-2">&#127949;</div>
+                                    <div class="stat-value fw-bold" id="totalMotos">12</div>
+                                    <div class="text-muted small mt-1">Motos en inventario</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-xl-3">
+                            <div class="card stat-card h-100">
+                                <div class="card-body">
+                                    <div class="fs-1 mb-2">&#128295;</div>
+                                    <div class="stat-value fw-bold" id="totalRefacciones">48</div>
+                                    <div class="text-muted small mt-1">Refacciones disponibles</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-xl-3">
+                            <div class="card stat-card h-100">
+                                <div class="card-body">
+                                    <div class="fs-1 mb-2">&#128176;</div>
+                                    <div class="stat-value fw-bold" id="totalVentas">23</div>
+                                    <div class="text-muted small mt-1">Ventas este mes</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-xl-3">
+                            <div class="card stat-card h-100">
+                                <div class="card-body">
+                                    <div class="fs-1 mb-2">&#128101;</div>
+                                    <div class="stat-value fw-bold" id="totalClientes">156</div>
+                                    <div class="text-muted small mt-1">Clientes registrados</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">&#128295;</div>
-                        <div class="stat-value" id="totalRefacciones">48</div>
-                        <div class="stat-label">Refacciones disponibles</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">&#128176;</div>
-                        <div class="stat-value" id="totalVentas">23</div>
-                        <div class="stat-label">Ventas este mes</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">&#128101;</div>
-                        <div class="stat-value" id="totalClientes">156</div>
-                        <div class="stat-label">Clientes registrados</div>
-                    </div>
-                </div>
-                <div class="section-header">
-                    <h2>Ventas Recientes</h2>
-                </div>
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Cliente</th>
-                                <th>Producto</th>
-                                <th>Monto</th>
-                                <th>Estado</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Carlos Martinez</td>
-                                <td>Honda CB250F</td>
-                                <td>$52,000</td>
-                                <td><span class="badge badge-success">Completada</span></td>
-                            </tr>
-                            <tr>
-                                <td>Ana Lopez</td>
-                                <td>Kit de frenos Brembo</td>
-                                <td>$3,800</td>
-                                <td><span class="badge badge-success">Completada</span></td>
-                            </tr>
-                            <tr>
-                                <td>Miguel Torres</td>
-                                <td>Yamaha YZF-R3</td>
-                                <td>$89,000</td>
-                                <td><span class="badge badge-pending">Pendiente</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Motos -->
-            <div class="section" id="section-motos">
-                <div class="section-header">
-                    <h2>Catalogo de Motos</h2>
-                    <button class="btn-new" onclick="openModal('moto')">+ Nueva Moto</button>
-                </div>
-                <div class="cards-grid" id="motosGrid">
-                    <!-- Se llena con JS -->
-                </div>
-            </div>
-
-            <!-- Refacciones -->
-            <div class="section" id="section-refacciones">
-                <div class="section-header">
-                    <h2>Refacciones</h2>
-                    <button class="btn-new" onclick="openModal('refaccion')">+ Nueva Refaccion</button>
-                </div>
-                <div class="cards-grid" id="refaccionesGrid">
-                    <!-- Se llena con JS -->
-                </div>
-            </div>
-
-            <!-- Ventas -->
-            <div class="section" id="section-ventas">
-                <div class="section-header">
-                    <h2>Registro de Ventas</h2>
-                    <button class="btn-new" onclick="openModal('venta')">+ Nueva Venta</button>
-                </div>
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Fecha</th>
-                                <th>Cliente</th>
-                                <th>Producto</th>
-                                <th>Monto</th>
-                                <th>Estado</th>
-                            </tr>
-                        </thead>
-                        <tbody id="ventasTableBody">
-                            <!-- Se llena con JS -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Clientes -->
-            <div class="section" id="section-clientes">
-                <div class="section-header">
-                    <h2>Clientes</h2>
-                    <button class="btn-new" onclick="openModal('cliente')">+ Nuevo Cliente</button>
-                </div>
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Telefono</th>
-                                <th>Email</th>
-                                <th>Compras</th>
-                            </tr>
-                        </thead>
-                        <tbody id="clientesTableBody">
-                            <!-- Se llena con JS -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- Aside -->
-        <aside class="aside-panel">
-            <div class="aside-section">
-                <h3>Resumen Rapido</h3>
-                <div class="aside-item">
-                    <span class="aside-icon">&#127949;</span>
-                    <div>
-                        <div class="aside-label">Moto mas vendida</div>
-                        <div class="aside-value">Honda CB250F</div>
+                    <h2 class="h5 mb-3">Ventas Recientes</h2>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Cliente</th>
+                                    <th>Producto</th>
+                                    <th>Monto</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Carlos Martinez</td>
+                                    <td>Honda CB250F</td>
+                                    <td>$52,000</td>
+                                    <td><span class="badge badge-success">Completada</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Ana Lopez</td>
+                                    <td>Kit de frenos Brembo</td>
+                                    <td>$3,800</td>
+                                    <td><span class="badge badge-success">Completada</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Miguel Torres</td>
+                                    <td>Yamaha YZF-R3</td>
+                                    <td>$89,000</td>
+                                    <td><span class="badge badge-pending">Pendiente</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                <div class="aside-item">
-                    <span class="aside-icon">&#128295;</span>
-                    <div>
-                        <div class="aside-label">Refaccion popular</div>
-                        <div class="aside-value">Kit de Frenos Brembo</div>
+
+                <!-- Motos -->
+                <div class="section" id="section-motos">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2 class="h4 mb-0">Catalogo de Motos</h2>
+                        <button class="btn btn-danger fw-semibold" onclick="openModal('moto')">+ Nueva Moto</button>
+                    </div>
+                    <div class="row g-4" id="motosGrid"></div>
+                </div>
+
+                <!-- Refacciones -->
+                <div class="section" id="section-refacciones">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2 class="h4 mb-0">Refacciones</h2>
+                        <button class="btn btn-danger fw-semibold" onclick="openModal('refaccion')">+ Nueva Refaccion</button>
+                    </div>
+                    <div class="row g-4" id="refaccionesGrid"></div>
+                </div>
+
+                <!-- Ventas -->
+                <div class="section" id="section-ventas">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2 class="h4 mb-0">Registro de Ventas</h2>
+                        <button class="btn btn-danger fw-semibold" onclick="openModal('venta')">+ Nueva Venta</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Fecha</th>
+                                    <th>Cliente</th>
+                                    <th>Producto</th>
+                                    <th>Monto</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ventasTableBody"></tbody>
+                        </table>
                     </div>
                 </div>
-                <div class="aside-item">
-                    <span class="aside-icon">&#11088;</span>
-                    <div>
-                        <div class="aside-label">Mejor cliente</div>
-                        <div class="aside-value">Laura Garcia</div>
+
+                <!-- Clientes -->
+                <div class="section" id="section-clientes">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2 class="h4 mb-0">Clientes</h2>
+                        <button class="btn btn-danger fw-semibold" onclick="openModal('cliente')">+ Nuevo Cliente</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Telefono</th>
+                                    <th>Email</th>
+                                    <th>Compras</th>
+                                </tr>
+                            </thead>
+                            <tbody id="clientesTableBody"></tbody>
+                        </table>
                     </div>
                 </div>
+
             </div>
-            <div class="aside-section">
-                <h3>Contacto</h3>
-                <div class="aside-contact">
-                    <p>Uriel</p>
-                    <p>Thania</p>
-                    <p class="aside-role">Administradores</p>
+
+            <!-- Aside -->
+            <aside class="aside-panel d-none d-lg-flex flex-column gap-4">
+                <div class="aside-section">
+                    <h3>Resumen Rapido</h3>
+                    <div class="aside-item">
+                        <span class="aside-icon">&#127949;</span>
+                        <div>
+                            <div class="aside-label">Moto mas vendida</div>
+                            <div class="aside-value">Honda CB250F</div>
+                        </div>
+                    </div>
+                    <div class="aside-item">
+                        <span class="aside-icon">&#128295;</span>
+                        <div>
+                            <div class="aside-label">Refaccion popular</div>
+                            <div class="aside-value">Kit de Frenos Brembo</div>
+                        </div>
+                    </div>
+                    <div class="aside-item">
+                        <span class="aside-icon">&#11088;</span>
+                        <div>
+                            <div class="aside-label">Mejor cliente</div>
+                            <div class="aside-value">Laura Garcia</div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </aside>
+                <div class="aside-section">
+                    <h3>Contacto</h3>
+                    <div class="aside-contact text-center p-3 rounded-3">
+                        <p class="mb-1 fw-semibold">Uriel</p>
+                        <p class="mb-1 fw-semibold">Thania</p>
+                        <p class="aside-role small mb-0">Administradores</p>
+                    </div>
+                </div>
+            </aside>
 
         </div>
 
         <!-- Footer -->
-        <footer class="app-footer">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <span>&#127981;</span>
-                    <span>MotoShop</span>
+        <footer class="app-footer py-4 px-4">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                <div class="footer-brand d-flex align-items-center gap-2">
+                    <span>&#127981;</span> MotoShop
                 </div>
-                <div class="footer-names">
-                    Desarrollado por <strong>Uriel</strong> & <strong>Thania</strong>
+                <div class="footer-names text-muted small">
+                    Desarrollado por <strong>Uriel</strong> &amp; <strong>Thania</strong>
                 </div>
-                <div class="footer-copy">
+                <div class="text-muted" style="font-size:12px">
                     &copy; 2026 MotoShop - Todos los derechos reservados
                 </div>
             </div>
@@ -261,20 +268,33 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal">
-            <h2 id="modalTitle">Nuevo Registro</h2>
-            <div id="modalContent"></div>
-            <div class="modal-actions">
-                <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
-                <button class="btn-save" onclick="saveRecord()">Guardar</button>
+    <div class="modal fade" id="mainModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-danger" id="modalTitle">Nuevo Registro</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="modalContent"></div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-danger fw-semibold" onclick="saveRecord()">Guardar</button>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Notificacion -->
-    <div class="notification" id="notification"></div>
+    <!-- Toast Notification -->
+    <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index:3000">
+        <div id="notification" class="toast align-items-center border-0 notification-toast" role="alert">
+            <div class="d-flex">
+                <div class="toast-body fw-semibold" id="notificationMsg"></div>
+                <button type="button" class="btn-close btn-close-dark me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+        </div>
+    </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // ===== DATOS =====
         let motos = [
@@ -343,13 +363,12 @@
 
         // ===== SIDEBAR =====
         function toggleSidebar() {
-            document.getElementById("sidebar").classList.toggle("open");
-            document.getElementById("sidebarOverlay").classList.toggle("show");
+            bootstrap.Offcanvas.getOrCreateInstance(document.getElementById("sidebar")).toggle();
         }
 
         function closeSidebar() {
-            document.getElementById("sidebar").classList.remove("open");
-            document.getElementById("sidebarOverlay").classList.remove("show");
+            const oc = bootstrap.Offcanvas.getInstance(document.getElementById("sidebar"));
+            if (oc) oc.hide();
         }
 
         // ===== NAVEGACION =====
@@ -390,15 +409,17 @@
         function renderMotos() {
             const grid = document.getElementById("motosGrid");
             grid.innerHTML = motos.map(m => `
-                <div class="product-card">
-                    <div class="card-image">${motoEmojis[m.categoria] || "\u{1F3CD}\u{FE0F}"}</div>
-                    <div class="card-body">
-                        <div class="category">${m.categoria}</div>
-                        <h3>${m.nombre}</h3>
-                        <div class="description">${m.desc}</div>
-                        <div class="card-footer">
-                            <span class="price">$${m.precio.toLocaleString()}</span>
-                            <button class="btn-add" onclick="quickSale('${m.nombre}', ${m.precio})">Vender</button>
+                <div class="col-sm-6 col-xl-4">
+                    <div class="card product-card h-100">
+                        <div class="card-image">${motoEmojis[m.categoria] || "\u{1F3CD}\u{FE0F}"}</div>
+                        <div class="card-body">
+                            <div class="category">${m.categoria}</div>
+                            <h3 class="h5">${m.nombre}</h3>
+                            <p class="text-muted small">${m.desc}</p>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="price">$${m.precio.toLocaleString()}</span>
+                                <button class="btn btn-danger btn-sm fw-semibold" onclick="quickSale('${m.nombre}', ${m.precio})">Vender</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -417,15 +438,17 @@
         function renderRefacciones() {
             const grid = document.getElementById("refaccionesGrid");
             grid.innerHTML = refacciones.map(r => `
-                <div class="product-card">
-                    <div class="card-image">${refEmojis[r.categoria] || "\u{1F527}"}</div>
-                    <div class="card-body">
-                        <div class="category">${r.categoria}</div>
-                        <h3>${r.nombre}</h3>
-                        <div class="description">${r.desc}</div>
-                        <div class="card-footer">
-                            <span class="price">$${r.precio.toLocaleString()}</span>
-                            <button class="btn-add" onclick="quickSale('${r.nombre}', ${r.precio})">Vender</button>
+                <div class="col-sm-6 col-xl-4">
+                    <div class="card product-card h-100">
+                        <div class="card-image">${refEmojis[r.categoria] || "\u{1F527}"}</div>
+                        <div class="card-body">
+                            <div class="category">${r.categoria}</div>
+                            <h3 class="h5">${r.nombre}</h3>
+                            <p class="text-muted small">${r.desc}</p>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="price">$${r.precio.toLocaleString()}</span>
+                                <button class="btn btn-danger btn-sm fw-semibold" onclick="quickSale('${r.nombre}', ${r.precio})">Vender</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -461,33 +484,32 @@
         // ===== MODAL =====
         function openModal(type) {
             currentModal = type;
-            const overlay = document.getElementById("modalOverlay");
             const title = document.getElementById("modalTitle");
             const content = document.getElementById("modalContent");
 
             if (type === "moto") {
                 title.textContent = "Nueva Moto";
                 content.innerHTML = `
-                    <div class="form-group"><label>Nombre</label><input id="f-nombre" placeholder="Ej: Honda CBR600"></div>
-                    <div class="form-group"><label>Categoria</label>
-                        <select id="f-categoria">
+                    <div class="mb-3"><label class="form-label text-secondary small">Nombre</label><input class="form-control" id="f-nombre" placeholder="Ej: Honda CBR600"></div>
+                    <div class="mb-3"><label class="form-label text-secondary small">Categoria</label>
+                        <select class="form-select" id="f-categoria">
                             <option>Naked</option><option>Deportiva</option><option>Adventure</option><option>Scooter</option>
                         </select>
                     </div>
-                    <div class="form-group"><label>Precio (MXN)</label><input id="f-precio" type="number" placeholder="0"></div>
-                    <div class="form-group"><label>Descripcion</label><textarea id="f-desc" rows="3" placeholder="Descripcion de la moto"></textarea></div>
+                    <div class="mb-3"><label class="form-label text-secondary small">Precio (MXN)</label><input class="form-control" id="f-precio" type="number" placeholder="0"></div>
+                    <div class="mb-3"><label class="form-label text-secondary small">Descripcion</label><textarea class="form-control" id="f-desc" rows="3" placeholder="Descripcion de la moto"></textarea></div>
                 `;
             } else if (type === "refaccion") {
                 title.textContent = "Nueva Refaccion";
                 content.innerHTML = `
-                    <div class="form-group"><label>Nombre</label><input id="f-nombre" placeholder="Ej: Pastillas de freno"></div>
-                    <div class="form-group"><label>Categoria</label>
-                        <select id="f-categoria">
+                    <div class="mb-3"><label class="form-label text-secondary small">Nombre</label><input class="form-control" id="f-nombre" placeholder="Ej: Pastillas de freno"></div>
+                    <div class="mb-3"><label class="form-label text-secondary small">Categoria</label>
+                        <select class="form-select" id="f-categoria">
                             <option>Frenos</option><option>Transmision</option><option>Motor</option><option>Lubricantes</option><option>Llantas</option><option>Suspension</option>
                         </select>
                     </div>
-                    <div class="form-group"><label>Precio (MXN)</label><input id="f-precio" type="number" placeholder="0"></div>
-                    <div class="form-group"><label>Descripcion</label><textarea id="f-desc" rows="3" placeholder="Descripcion de la refaccion"></textarea></div>
+                    <div class="mb-3"><label class="form-label text-secondary small">Precio (MXN)</label><input class="form-control" id="f-precio" type="number" placeholder="0"></div>
+                    <div class="mb-3"><label class="form-label text-secondary small">Descripcion</label><textarea class="form-control" id="f-desc" rows="3" placeholder="Descripcion de la refaccion"></textarea></div>
                 `;
             } else if (type === "venta") {
                 title.textContent = "Nueva Venta";
@@ -495,27 +517,28 @@
                 const clienteOptions = clientes.map(c => `<option>${c.nombre}</option>`).join("");
                 const productOptions = allProducts.map(p => `<option>${p}</option>`).join("");
                 content.innerHTML = `
-                    <div class="form-group"><label>Cliente</label><select id="f-cliente">${clienteOptions}</select></div>
-                    <div class="form-group"><label>Producto</label><select id="f-producto">${productOptions}</select></div>
-                    <div class="form-group"><label>Monto (MXN)</label><input id="f-monto" type="number" placeholder="0"></div>
-                    <div class="form-group"><label>Estado</label>
-                        <select id="f-estado"><option>Completada</option><option>Pendiente</option></select>
+                    <div class="mb-3"><label class="form-label text-secondary small">Cliente</label><select class="form-select" id="f-cliente">${clienteOptions}</select></div>
+                    <div class="mb-3"><label class="form-label text-secondary small">Producto</label><select class="form-select" id="f-producto">${productOptions}</select></div>
+                    <div class="mb-3"><label class="form-label text-secondary small">Monto (MXN)</label><input class="form-control" id="f-monto" type="number" placeholder="0"></div>
+                    <div class="mb-3"><label class="form-label text-secondary small">Estado</label>
+                        <select class="form-select" id="f-estado"><option>Completada</option><option>Pendiente</option></select>
                     </div>
                 `;
             } else if (type === "cliente") {
                 title.textContent = "Nuevo Cliente";
                 content.innerHTML = `
-                    <div class="form-group"><label>Nombre completo</label><input id="f-nombre" placeholder="Nombre del cliente"></div>
-                    <div class="form-group"><label>Telefono</label><input id="f-telefono" placeholder="55-0000-0000"></div>
-                    <div class="form-group"><label>Email</label><input id="f-email" type="email" placeholder="email@ejemplo.com"></div>
+                    <div class="mb-3"><label class="form-label text-secondary small">Nombre completo</label><input class="form-control" id="f-nombre" placeholder="Nombre del cliente"></div>
+                    <div class="mb-3"><label class="form-label text-secondary small">Telefono</label><input class="form-control" id="f-telefono" placeholder="55-0000-0000"></div>
+                    <div class="mb-3"><label class="form-label text-secondary small">Email</label><input class="form-control" id="f-email" type="email" placeholder="email@ejemplo.com"></div>
                 `;
             }
 
-            overlay.classList.add("show");
+            bootstrap.Modal.getOrCreateInstance(document.getElementById("mainModal")).show();
         }
 
         function closeModal() {
-            document.getElementById("modalOverlay").classList.remove("show");
+            const m = bootstrap.Modal.getInstance(document.getElementById("mainModal"));
+            if (m) m.hide();
         }
 
         function saveRecord() {
@@ -580,10 +603,8 @@
 
         // ===== NOTIFICACION =====
         function showNotification(msg) {
-            const el = document.getElementById("notification");
-            el.textContent = msg;
-            el.classList.add("show");
-            setTimeout(() => el.classList.remove("show"), 3000);
+            document.getElementById("notificationMsg").textContent = msg;
+            bootstrap.Toast.getOrCreateInstance(document.getElementById("notification"), { delay: 3000 }).show();
         }
     </script>
 
